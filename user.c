@@ -99,8 +99,6 @@ void add_block(user* user1, user* user2)
     user1->ids_blocked[user1->num_blocked++] = user2->user_id;
 }
 
-
-
 void destroy_user_storage()
 {
     for(int i = 0; i < total_users; ++i)
