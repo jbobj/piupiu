@@ -1,5 +1,5 @@
-#ifndef PUIPUISTRUCTS_H
-#define PUIPUISTRUCTS_H
+#ifndef USER_H
+#define USER_H
 
 #include <stdio.h>
 #include <time.h>
@@ -15,19 +15,6 @@ typedef struct user_struct {
         int num_following, * ids_following;
         int num_blocked, * ids_blocked;
 } user;
-
-typedef struct piu_struct {
-        int piu_id;
-        int piu_id_of_repiu, user_id_of_repiu;    /* zero if not a re-Piu */
-
-        int user_id_of_poster;
-        user * poster;              
-
-        char piu_text_utf8[140*4+1];
-        unsigned char piu_length;
-        unsigned char visible_only_to_followers;
-} piu;
-
 
 // Create a new user
 user* create_user(char* user_name, char* url);

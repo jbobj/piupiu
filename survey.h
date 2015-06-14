@@ -1,4 +1,7 @@
-#include "puipuidata.h"
+#ifndef SURVEY_H
+#define SURVEY_H
+
+#include "user.h"
 
 
 typedef struct surveillance_request_struct {
@@ -8,3 +11,5 @@ typedef struct surveillance_request_struct {
         piu * piu_patterns;
         FILE * write_here;
 } surveillance_request;
+
+#endif

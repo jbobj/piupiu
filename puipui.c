@@ -1,4 +1,6 @@
-#include "puipuidata.h"
+#include "user.h"
+#include "pui.h"
+#include "survey.h"
 
 
 void create_users_1();
