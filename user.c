@@ -55,18 +55,18 @@ void print_user(user* user)
         return;
     
     printf("User: \n");
-    printf("\tID: %d\n", user->user_id); 
-    printf("\tName: %s\n", user->name);  
-    printf("\tURL: %s\n", user->URL_of_avatar);
-    print_time("\tCreated: %s", user->when_created);
-    print_time("\tLast Active: %s", user->last_activity);
-    printf("\tFollowing: ");
+    printf("ID: %d\n", user->user_id); 
+    printf("Name: %s\n", user->name);  
+    printf("URL: %s\n", user->URL_of_avatar);
+    print_time("Created: %s", user->when_created);
+    print_time("Last Active: %s", user->last_activity);
+    printf("Following: ");
     for (int i = 0; i < user->num_following; ++i)
         printf("%d ", user->ids_following[i]); 
-    printf("\n\tBlocked: ");
+    printf("\nBlocked: ");
     for (int i = 0; i < user->num_blocked; ++i)
         printf("%d ", user->ids_blocked[i]);
-    printf("\n");
+    printf("\n\n");
 }
 
 void print_all_users()

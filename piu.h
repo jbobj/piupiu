@@ -19,17 +19,23 @@ typedef struct piu_struct {
 piu* post_piu(
     user* poster,
     const char* piu_text,
-    unsigned char visible);
+    unsigned char private);
     
     
 // Post a re-piu
 piu* post_repiu(
     user* poster,
     piu* piu_2_repiu,
-    unsigned char visible);
+    unsigned char private);
 
 // Get a PUI by ID
 piu* get_piu(int piu_id);
+
+// Print PIU
+void print_piu(piu* piu);
+
+// Print all PIU
+void print_all_pius();
 
 //Destry PUI storage
 void destroy_piu_storage();
