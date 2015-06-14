@@ -1,1 +1,1 @@
-# puipui
+Quick and dirty attempt at 7th Underhanded C-contest. (Even though it's over)
