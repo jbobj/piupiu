@@ -24,6 +24,7 @@ user* get_user(int user_id);
 
 int get_num_users();
 
+
 // Print user
 void print_user(user* user);
 
@@ -31,7 +32,14 @@ void print_user(user* user);
 void print_all_users();
 
 // Make User 1 follow user 2
+void add_following_id(user* user1, int user2_id);
+
+// Make User 1 follow user 2
 void add_following(user* user1, user* user2);
+
+// Make user 1 block user 2
+void add_block_id(user* user1, int user2_id);
+
 
 // Make user 1 block user 2
 void add_block(user* user1, user* user2);

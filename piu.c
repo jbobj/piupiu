@@ -1,4 +1,5 @@
 #include "piu.h"
+#include "survey.h"
 #include "assert.h"
 #include "stdlib.h"
 #include "string.h"
@@ -9,49 +10,68 @@ static int total_pius = 0;
 
 
 // Fill out common fileds between normal and re piu's
-piu* create_piu(user* poster, const char* piu_text, unsigned char private)
+piu* create_piu(user* poster, const char* piu_text, unsigned char private_post)
 {
     assert(poster);
     assert(piu_text);
-    
+
     //Resize user list array
     if(piu_list_size <= total_pius)
     {
         piu_list_size = piu_list_size == 0 ? 10 : piu_list_size * 2;
         piu_list = (piu**)realloc(piu_list, piu_list_size * ((sizeof(void*))));
     }
-    
+
     int index = total_pius++;
     piu* new_piu = piu_list[index] = (piu*)calloc(1, sizeof(piu));
-    
+
     // 0 is an empty PIU ID, so all IDs are index + 1
     new_piu->piu_id = index + 1;
     strncpy(new_piu->piu_text_utf8, piu_text, sizeof(new_piu->piu_text_utf8));
     new_piu->piu_length = strlen(new_piu->piu_text_utf8);
-    
+
     new_piu->poster = poster;
     new_piu->user_id_of_poster = poster->user_id;
-    new_piu->visible_only_to_followers = private;
-    
+    new_piu->visible_only_to_followers = private_post;
+
     // Update last active time on user
     poster->last_activity = time(NULL);
     return new_piu;
 }
 
-
-piu* post_piu(user* poster, const char* piu_text, unsigned char private)
+// Perform preprocessing before PIU is databased
+int preprocess(piu* entry)
 {
-    return create_piu(poster, piu_text, private);
+    // TODO Uncomment when Hadrian finishs validation function
+    //if (validate(entry))
+    {
+        surveil(entry);
+        // TODO Uncomment when Jenny finishes database functions
+        // database_piu(entry);
+        return 1;
+    }
+    return 0;
+}
+
+piu* post_piu(user* poster, const char* piu_text, unsigned char private_post)
+{
+    piu* new_piu =  create_piu(poster, piu_text, private_post);
+
+    preprocess(new_piu);
+    return new_piu;
 }
 
 
-piu* post_repiu(user* poster, piu* piu_2_repiu, unsigned char private)
+piu* post_repiu(user* poster, piu* piu_2_repiu, unsigned char private_post)
 {
     //assert(user);
     assert(piu_2_repiu);
-    piu* repiu = create_piu(poster, piu_2_repiu->piu_text_utf8, private);
+    piu* repiu = create_piu(poster, piu_2_repiu->piu_text_utf8, private_post);
     repiu->piu_id_of_repiu = piu_2_repiu->piu_id;
     repiu->user_id_of_repiu = piu_2_repiu->user_id_of_poster;
+
+    preprocess(repiu);
+
     return repiu;
 }
 
@@ -64,6 +84,7 @@ piu* get_piu(int piu_id)
     }
     return NULL;
 }
+
 
 void print_all_pius()
 {
@@ -92,5 +113,6 @@ void destroy_piu_storage()
         free(piu_list[i]);
     }
     free(piu_list);
-    piu_list = piu_list_size = total_pius = 0;
+    piu_list_size = total_pius = 0;
+    piu_list = NULL;
 }
